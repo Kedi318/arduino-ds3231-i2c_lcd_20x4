@@ -34,7 +34,7 @@ void loop() {
   int row = 0;
 
   if ((now.hour() == 10 && now.minute() == 0 && now.second() == 0) ||
-      (now.minute() == 10 && now.second() == 0)) {
+      (now.minute() == 10 && now.second() <= 5)) {
     lcd.clear();
     lcd.setCursor(0, 3);
     lcd.print("Temp: ");
