@@ -1,4 +1,4 @@
-<img src="https://github.com/user-attachments/assets/cbf35cc3-dd44-4659-91e4-407ee6c62ea6" width="300">
+<img src="https://github.com/user-attachments/assets/cbf35cc3-dd44-4659-91e4-407ee6c62ea6" width="450">
 
 An Arduino code for a Weather station with DS3231 module and I²C 20x4 LCD!
 
