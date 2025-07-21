@@ -39,18 +39,18 @@ void loop() {
 
   int hourTens = now.hour() / 10;
   int hourTensCol = (hourTens == 1) ? 3 : 2;
-  if (hourTens == 0) {
-    bigFont.writeint(row, hourTensCol, 0, 1, true);
-  } else {
-    bigFont.writeint(row, hourTensCol, hourTens, 1, true);
-  }
+  bigFont.writeint(row, hourTensCol, ' ', 1, true);
+  bigFont.writeint(row, hourTensCol, hourTens, 1, true);
 
+  bigFont.writeint(row, 5, ' ', 1, true);
   bigFont.writeint(row, 5, now.hour() % 10, 1, true);
 
   int minuteTens = now.minute() / 10;
   int minuteTensCol = (minuteTens == 1) ? 11 : 10;
+  bigFont.writeint(row, minuteTensCol, ' ', 1, true);
   bigFont.writeint(row, minuteTensCol, minuteTens, 1, true);
 
+  bigFont.writeint(row, 13, ' ', 1, true);
   bigFont.writeint(row, 13, now.minute() % 10, 1, true);
 
   lcd.setCursor(17, 1);
