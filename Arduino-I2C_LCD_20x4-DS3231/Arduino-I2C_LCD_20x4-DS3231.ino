@@ -42,6 +42,12 @@ void loop() {
   int minuteTens = now.minute() / 10;
   int minuteTensCol = (minuteTens == 1) ? 11 : 10;
 
+  if (prevMinuteTens == 0 && minuteTens == 1) {
+    lcd.clear();
+    lcd.setCursor(0, 3);
+    lcd.print("Temp: ");
+  }
+
   if (minuteTens != prevMinuteTens && prevMinuteTens != -1) {
     int prevMinuteTensCol = (prevMinuteTens == 1) ? 11 : 10;
     bigFont.writeint(row, prevMinuteTensCol, ' ', 1, true);
