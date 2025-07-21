@@ -33,6 +33,12 @@ void loop() {
   float temperature = rtc.getTemperature();
   int row = 0;
 
+  if (now.minute() == 10 && now.second() == 0) {
+    lcd.clear();
+    lcd.setCursor(0, 3);
+    lcd.print("Temp: ");
+  }
+
   int hourTens = now.hour() / 10;
   int hourTensCol = (hourTens == 1) ? 3 : 2;
   bigFont.writeint(row, hourTensCol, hourTens, 1, true);
@@ -41,12 +47,6 @@ void loop() {
 
   int minuteTens = now.minute() / 10;
   int minuteTensCol = (minuteTens == 1) ? 11 : 10;
-
-  if (prevMinuteTens == 0 && minuteTens == 1) {
-    lcd.clear();
-    lcd.setCursor(0, 3);
-    lcd.print("Temp: ");
-  }
 
   if (minuteTens != prevMinuteTens && prevMinuteTens != -1) {
     int prevMinuteTensCol = (prevMinuteTens == 1) ? 11 : 10;
