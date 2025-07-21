@@ -5,28 +5,25 @@
 
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 BigFont01_I2C bigFont(&lcd);
-
 RTC_DS3231 rtc;
 
 const char* dayNames[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 const char* monthNames[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
+int prevMinuteTens = -1;
+
 void setup() {
   Wire.begin();
-
   lcd.init();
   lcd.backlight();
   lcd.clear();
-
   bigFont.begin();
-
   if (!rtc.begin()) {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("RTC not found!");
     while (1);
   }
-
   lcd.setCursor(0, 3);
   lcd.print("Temp: ");
 }
@@ -34,23 +31,25 @@ void setup() {
 void loop() {
   DateTime now = rtc.now();
   float temperature = rtc.getTemperature();
-
   int row = 0;
 
   int hourTens = now.hour() / 10;
   int hourTensCol = (hourTens == 1) ? 3 : 2;
-  bigFont.writeint(row, hourTensCol, ' ', 1, true);
   bigFont.writeint(row, hourTensCol, hourTens, 1, true);
 
-  bigFont.writeint(row, 5, ' ', 1, true);
   bigFont.writeint(row, 5, now.hour() % 10, 1, true);
 
   int minuteTens = now.minute() / 10;
   int minuteTensCol = (minuteTens == 1) ? 11 : 10;
-  bigFont.writeint(row, minuteTensCol, ' ', 1, true);
-  bigFont.writeint(row, minuteTensCol, minuteTens, 1, true);
 
-  bigFont.writeint(row, 13, ' ', 1, true);
+  if (minuteTens != prevMinuteTens && prevMinuteTens != -1) {
+    int prevMinuteTensCol = (prevMinuteTens == 1) ? 11 : 10;
+    bigFont.writeint(row, prevMinuteTensCol, ' ', 1, true);
+  }
+
+  bigFont.writeint(row, minuteTensCol, minuteTens, 1, true);
+  prevMinuteTens = minuteTens;
+
   bigFont.writeint(row, 13, now.minute() % 10, 1, true);
 
   lcd.setCursor(17, 1);
